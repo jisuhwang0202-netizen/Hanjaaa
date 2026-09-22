@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>고사성어 200 — 학습과 퀴즈</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700;900&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#ece3cd;
+    --paper-deep:#e2d6ba;
+    --ink:#241f18;
+    --ink-soft:#5c523f;
+    --ink-faint:#8b7f68;
+    --seal:#a8321f;
+    --seal-deep:#822417;
+    --jade:#3f6b52;
+    --jade-deep:#2c4d3a;
+    --line:#c7b998;
+    --card-bg:#f4ecd8;
+    --shadow:0 1px 0 rgba(36,31,24,.06);
+    --radius:2px;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    box-sizing:border-box;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#1c1913;
+      --paper-deep:#242019;
+      --ink:#ece3cd;
+      --ink-soft:#c9bc9c;
+      --ink-faint:#8a8065;
+      --seal:#d1573c;
+      --seal-deep:#e17a5f;
+      --jade:#6fae8b;
+      --jade-deep:#8ec7a8;
+      --line:#3a3427;
+      --card-bg:#231f18;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#1c1913;
+    --paper-deep:#242019;
+    --ink:#ece3cd;
+    --ink-soft:#c9bc9c;
+    --ink-faint:#8a8065;
+    --seal:#d1573c;
+    --seal-deep:#e17a5f;
+    --jade:#6fae8b;
+    --jade-deep:#8ec7a8;
+    --line:#3a3427;
+    --card-bg:#231f18;
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    background:var(--paper);
+    background-image:
+      radial-gradient(ellipse at 15% 8%, rgba(168,50,31,0.035), transparent 45%),
+      radial-gradient(ellipse at 90% 92%, rgba(63,107,82,0.03), transparent 50%);
+    color:var(--ink);
+    font-family:'Noto Sans KR', sans-serif;
+    line-height:1.6;
+    scroll-padding-top: env(safe-area-inset-top, 0px);
+  }
+  .wrap{
+    max-width:900px;
+    margin:0 auto;
+    padding:36px 20px 80px;
+  }
+
+  /* ---- Header ---- */
+  header.top{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:16px;
+    border-bottom:3px double var(--ink);
+    padding-bottom:18px;
+    margin-bottom:22px;
+    flex-wrap:wrap;
+  }
+  .title-block h1{
+    font-family:'Noto Serif KR', serif;
+    font-weight:900;
+    font-size:clamp(28px,6vw,40px);
+    margin:0 0 4px;
+    letter-spacing:.02em;
+  }
+  .title-block p{
+    margin:0;
+    color:var(--ink-soft);
+    font-size:14px;
+  }
+  .seal-badge{
+    font-family:'Noto Serif KR', serif;
+    font-weight:700;
+    font-size:13px;
+    color:#f4ecd8;
+    background:var(--seal);
+    border:2px solid var(--seal-deep);
+    padding:8px 12px;
+    border-radius:3px;
+    writing-mode:vertical-rl;
+    letter-spacing:.15em;
+    flex-shrink:0;
+    box-shadow:var(--shadow);
+  }
+
+  /* ---- Mode tabs ---- */
+  nav.modes{
+    display:flex;
+    gap:8px;
+    margin-bottom:26px;
+  }
+  nav.modes button{
+    font-family:'Noto Serif KR', serif;
+    font-weight:700;
+    font-size:16px;
+    background:transparent;
+    border:1.5px solid var(--line);
+    color:var(--ink-soft);
+    padding:10px 20px;
+    cursor:pointer;
+    border-radius:3px;
+    transition:background .15s, color .15s, border-color .15s;
+  }
+  nav.modes button.active{
+    background:var(--ink);
+    color:var(--paper);
+    border-color:var(--ink);
+  }
+  nav.modes button:not(.active):hover{
+    border-color:var(--ink-soft);
+    color:var(--ink);
+  }
+
+  .view{display:none;}
+  .view.active{display:block;}
+
+  /* ---- List grid ---- */
+  .list-toolbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:14px;
+    color:var(--ink-faint);
+    font-size:13px;
+  }
+  .list-toolbar input{
+    font-family:'Noto Sans KR',sans-serif;
+    font-size:14px;
+    padding:8px 12px;
+    border:1.5px solid var(--line);
+    border-radius:3px;
+    background:var(--card-bg);
+    color:var(--ink);
+    width:200px;
+    max-width:45vw;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(150px,1fr));
+    gap:10px;
+  }
+  .tile{
+    background:var(--card-bg);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:12px 12px 10px;
+    cursor:pointer;
+    text-align:left;
+    transition:transform .1s, border-color .15s;
+    position:relative;
+  }
+  .tile:hover{
+    border-color:var(--seal);
+    transform:translateY(-1px);
+  }
+  .tile .no{
+    font-size:11px;
+    color:var(--ink-faint);
+    font-variant-numeric:tabular-nums;
+  }
+  .tile .hanja{
+    font-family:'Noto Serif KR', serif;
+    font-weight:700;
+    font-size:21px;
+    margin:2px 0 2px;
+    letter-spacing:.02em;
+  }
+  .tile .reading{
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+
+  /* ---- Detail modal ---- */
+  .modal-backdrop{
+    position:fixed;
+    inset:0;
+    background:rgba(20,17,12,.5);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:50;
+  }
+  .modal-backdrop.show{display:flex;}
+  .modal{
+    background:var(--paper-deep);
+    border:1px solid var(--line);
+    border-radius:4px;
+    max-width:460px;
+    width:100%;
+    max-height:85vh;
+    overflow-y:auto;
+    padding:26px 24px 22px;
+    box-shadow:0 12px 30px rgba(0,0,0,.25);
+  }
+  .modal .mno{
+    font-size:12px;
+    color:var(--ink-faint);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .modal .mno button{
+    background:none;
+    border:none;
+    color:var(--ink-faint);
+    font-size:20px;
+    cursor:pointer;
+    line-height:1;
+    padding:2px 6px;
+  }
+  .modal .mhanja{
+    font-family:'Noto Serif KR', serif;
+    font-weight:900;
+    font-size:44px;
+    margin:6px 0 2px;
+    letter-spacing:.03em;
+  }
+  .modal .mreading{
+    font-family:'Noto Serif KR', serif;
+    font-size:20px;
+    color:var(--seal);
+    font-weight:700;
+    margin-bottom:16px;
+  }
+  .char-table{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(90px,1fr));
+    gap:8px;
+    margin-bottom:16px;
+  }
+  .char-cell{
+    border:1px solid var(--line);
+    border-radius:3px;
+    padding:8px 6px;
+    text-align:center;
+    background:var(--card-bg);
+  }
+  .char-cell .c{
+    font-family:'Noto Serif KR', serif;
+    font-size:24px;
+    font-weight:700;
+    display:block;
+  }
+  .char-cell .m{
+    font-size:12px;
+    color:var(--ink-soft);
+    display:block;
+    margin-top:3px;
+  }
+  .modal .meaning{
+    font-size:15px;
+    line-height:1.7;
+    border-top:1px dashed var(--line);
+    padding-top:14px;
+  }
+  .modal .meaning .label{
+    font-size:11px;
+    color:var(--ink-faint);
+    display:block;
+    margin-bottom:4px;
+  }
+
+  /* ---- Quiz setup ---- */
+  .quiz-setup h2{
+    font-family:'Noto Serif KR', serif;
+    font-size:20px;
+    margin:0 0 6px;
+  }
+  .quiz-setup p.sub{
+    color:var(--ink-soft);
+    font-size:14px;
+    margin:0 0 18px;
+  }
+  .range-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(100px,1fr));
+    gap:8px;
+    margin-bottom:18px;
+  }
+  .range-btn{
+    border:1.5px solid var(--line);
+    background:var(--card-bg);
+    color:var(--ink-soft);
+    padding:10px 6px;
+    border-radius:3px;
+    font-size:13px;
+    font-weight:500;
+    cursor:pointer;
+    text-align:center;
+  }
+  .range-btn.selected{
+    background:var(--jade);
+    border-color:var(--jade-deep);
+    color:#f4ecd8;
+  }
+  .quiz-controls{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+  }
+  .quiz-controls button.pill{
+    border:1.5px solid var(--ink-soft);
+    background:transparent;
+    color:var(--ink-soft);
+    padding:6px 14px;
+    border-radius:20px;
+    font-size:13px;
+    cursor:pointer;
+  }
+  .start-btn{
+    font-family:'Noto Serif KR', serif;
+    font-weight:700;
+    font-size:16px;
+    background:var(--seal);
+    color:#f9f2e2;
+    border:2px solid var(--seal-deep);
+    padding:12px 28px;
+    border-radius:3px;
+    cursor:pointer;
+  }
+  .start-btn:disabled{
+    opacity:.4;
+    cursor:not-allowed;
+  }
+  .sel-count{
+    font-size:13px;
+    color:var(--ink-faint);
+  }
+
+  /* ---- Quiz running ---- */
+  .quiz-card{
+    background:var(--card-bg);
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:30px 26px;
+    max-width:560px;
+    margin:0 auto;
+  }
+  .quiz-progress{
+    display:flex;
+    justify-content:space-between;
+    font-size:12px;
+    color:var(--ink-faint);
+    margin-bottom:16px;
+  }
+  .quiz-progress .bar{
+    height:4px;
+    background:var(--line);
+    border-radius:2px;
+    overflow:hidden;
+    flex:1;
+    margin:0 12px;
+  }
+  .quiz-progress .bar > div{
+    height:100%;
+    background:var(--jade);
+  }
+  .q-meaning{
+    font-size:17px;
+    line-height:1.8;
+    margin-bottom:18px;
+    text-align:center;
+  }
+  .q-chars{
+    display:none;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:22px;
+  }
+  .q-chars.show{display:flex;}
+  .q-chars .char-cell{min-width:76px;}
+  .q-answer-row{
+    display:flex;
+    gap:10px;
+    margin-bottom:14px;
+  }
+  .q-answer-row input{
+    flex:1;
+    font-family:'Noto Serif KR', serif;
+    font-size:20px;
+    padding:12px 14px;
+    border:1.5px solid var(--line);
+    border-radius:3px;
+    background:var(--paper);
+    color:var(--ink);
+  }
+  .q-answer-row input:focus{
+    outline:none;
+    border-color:var(--seal);
+  }
+  .q-answer-row button{
+    font-family:'Noto Serif KR', serif;
+    font-weight:700;
+    font-size:15px;
+    background:var(--ink);
+    color:var(--paper);
+    border:none;
+    padding:0 22px;
+    border-radius:3px;
+    cursor:pointer;
+  }
+  .q-feedback{
+    min-height:64px;
+    border-radius:3px;
+    padding:12px 14px;
+    font-size:14px;
+    display:none;
+  }
+  .q-feedback.show{display:block;}
+  .q-feedback.correct{
+    background:rgba(63,107,82,.12);
+    border:1px solid var(--jade);
+    color:var(--jade-deep);
+  }
+  .q-feedback.wrong{
+    background:rgba(168,50,31,.10);
+    border:1px solid var(--seal);
+    color:var(--seal-deep);
+  }
+  .q-feedback .ans-hanja{
+    font-family:'Noto Serif KR', serif;
+    font-size:18px;
+    font-weight:700;
+  }
+  .q-feedback .ans-breakdown{
+    display:inline-block;
+    margin-top:6px;
+    font-family:'Noto Serif KR', serif;
+    font-size:14px;
+    color:inherit;
+    opacity:.85;
+  }
+  .q-next-row{
+    display:flex;
+    justify-content:flex-end;
+    margin-top:12px;
+  }
+  .q-next-row button{
+    font-family:'Noto Serif KR', serif;
+    font-weight:700;
+    background:var(--seal);
+    color:#f9f2e2;
+    border:none;
+    padding:9px 20px;
+    border-radius:3px;
+    cursor:pointer;
+    display:none;
+  }
+  .q-next-row button.show{display:inline-block;}
+
+  /* ---- Result ---- */
+  .result-card{
+    max-width:560px;
+    margin:0 auto;
+    text-align:center;
+  }
+  .result-card .score{
+    font-family:'Noto Serif KR', serif;
+    font-weight:900;
+    font-size:52px;
+    margin:10px 0 2px;
+    color:var(--seal);
+  }
+  .result-card .score-label{
+    color:var(--ink-soft);
+    font-size:14px;
+    margin-bottom:26px;
+  }
+  .result-actions{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin-bottom:30px;
+    flex-wrap:wrap;
+  }
+  .result-actions button{
+    font-family:'Noto Serif KR', serif;
+    font-weight:700;
+    font-size:14px;
+    padding:10px 18px;
+    border-radius:3px;
+    cursor:pointer;
+    border:1.5px solid var(--ink);
+    background:transparent;
+    color:var(--ink);
+  }
+  .result-actions button.primary{
+    background:var(--seal);
+    border-color:var(--seal-deep);
+    color:#f9f2e2;
+  }
+  .wrong-list{
+    text-align:left;
+    border-top:1px dashed var(--line);
+    padding-top:18px;
+  }
+  .wrong-list h3{
+    font-family:'Noto Serif KR', serif;
+    font-size:16px;
+    margin:0 0 12px;
+  }
+  .wrong-item{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    padding:10px 0;
+    border-bottom:1px solid var(--line);
+    font-size:14px;
+  }
+  .wrong-item .wh{
+    font-family:'Noto Serif KR', serif;
+    font-weight:700;
+    font-size:17px;
+    min-width:64px;
+  }
+  .wrong-item .wr{
+    color:var(--seal);
+    font-weight:700;
+    min-width:64px;
+  }
+  .wrong-item .wm{
+    color:var(--ink-soft);
+    flex:1;
+  }
+  .empty-msg{
+    text-align:center;
+    color:var(--ink-faint);
+    padding:40px 0;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="title-block">
+      <h1>故事成語 二百</h1>
+      <p>2026 고등학생이 알아야 할 필수 고사성어 200 — 학습 &amp; 퀴즈</p>
+    </div>
+    <div class="seal-badge">學而時習</div>
+  </header>
+
+  <nav class="modes">
+    <button class="active" data-mode="list">목록 보기</button>
+    <button data-mode="quiz">퀴즈</button>
+  </nav>
+
+  <!-- LIST VIEW -->
+  <section id="view-list" class="view active">
+    <div class="list-toolbar">
+      <span id="list-count">전체 200개</span>
+      <input id="search" type="text" placeholder="검색 (한자·한글·뜻)">
+    </div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <!-- QUIZ VIEW -->
+  <section id="view-quiz" class="view">
+
+    <div id="quiz-setup" class="quiz-setup">
+      <h2>범위를 선택하세요</h2>
+      <p class="sub">10개 단위로 원하는 범위를 골라 퀴즈를 시작합니다. 여러 범위를 함께 선택할 수 있어요.</p>
+      <div class="range-grid" id="range-grid"></div>
+      <div class="quiz-controls">
+        <button class="pill" id="select-all">전체 선택</button>
+        <button class="pill" id="select-none">선택 해제</button>
+        <span class="sel-count" id="sel-count">선택된 문항: 0개</span>
+      </div>
+      <button class="start-btn" id="start-quiz" disabled>퀴즈 시작</button>
+    </div>
+
+    <div id="quiz-running" style="display:none;">
+      <div class="quiz-progress">
+        <span id="prog-text">1 / 10</span>
+        <div class="bar"><div id="prog-bar" style="width:0%"></div></div>
+        <span id="prog-score">맞음 0</span>
+      </div>
+      <div class="quiz-card">
+        <div class="q-meaning" id="q-meaning"></div>
+        <div class="q-chars" id="q-chars"></div>
+        <div class="q-answer-row">
+          <input type="text" id="q-input" placeholder="한글로 답을 입력하세요" autocomplete="off">
+          <button id="q-check">확인</button>
+        </div>
+        <div class="q-feedback" id="q-feedback"></div>
+        <div class="q-next-row">
+          <button id="q-next">다음 문제 →</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="quiz-result" style="display:none;">
+      <div class="result-card">
+        <div class="score-label">결과</div>
+        <div class="score" id="result-score">0 / 0</div>
+        <div class="score-label" id="result-sub"></div>
+        <div class="result-actions">
+          <button class="primary" id="retry-wrong">틀린 문제만 다시 풀기</button>
+          <button id="retry-same">같은 범위 다시 풀기</button>
+          <button id="back-setup">범위 다시 선택</button>
+        </div>
+        <div class="wrong-list" id="wrong-list"></div>
+      </div>
+    </div>
+
+  </section>
+
+</div>
+
+<div class="modal-backdrop" id="modal-backdrop">
+  <div class="modal" id="modal-content"></div>
+</div>
+
+<script>
+const IDIOMS = [
+[1,"根幹","근간",[["根","뿌리"],["幹","줄기"]],"어떤 일이나 사물의 가장 중요한 바탕·기본구조·핵심"],
+[2,"白眉","백미",[["白","희다"],["眉","눈썹"]],"여럿 가운데서 가장 뛰어난 사람이나 훌륭한 물건"],
+[3,"無盡藏","무진장",[["無","없다"],["盡","다하다"],["藏","감추다(창고)"]],"매우 많아서 끝이 없을 정도로 풍부함"],
+[4,"千里眼","천리안",[["千","일천"],["里","마을(거리단위)"],["眼","눈"]],"사물을 꿰뚫어 보는 뛰어난 관찰력, 미래를 내다보는 통찰력"],
+[5,"甘言利說","감언이설",[["甘","달다"],["言","말씀"],["利","이롭다"],["說","말씀"]],"달콤한 말과 이익으로 꾀는 말"],
+[6,"居安思危","거안사위",[["居","살다"],["安","편안하다"],["思","생각하다"],["危","위태롭다"]],"편안할 때도 위태로움이 닥칠 것을 생각하여 미리 대비함"],
+[7,"見利思義","견리사의",[["見","보다"],["利","이롭다"],["思","생각하다"],["義","옳다"]],"이익을 보면 그것이 의로운지 아닌지 먼저 헤아림"],
+[8,"孤立無援","고립무원",[["孤","외롭다"],["立","서다"],["無","없다"],["援","돕다"]],"고립되어 아무런 도움도 받지 못함"],
+[9,"苦盡甘來","고진감래",[["苦","쓰다(고통)"],["盡","다하다"],["甘","달다(즐거움)"],["來","오다"]],"고생 끝에 즐거움이 옴"],
+[10,"九死一生","구사일생",[["九","아홉"],["死","죽다"],["一","하나"],["生","살다"]],"죽을 고비를 여러 차례 넘기고 겨우 살아남"],
+[11,"錦衣夜行","금의야행",[["錦","비단"],["衣","옷"],["夜","밤"],["行","다니다"]],"자랑삼아 하지 않으면 생색이 나지 않음, 보람 없는 일을 함"],
+[12,"大同小異","대동소이",[["大","크다"],["同","같다"],["小","작다"],["異","다르다"]],"큰 차이가 없이 거의 같음"],
+[13,"同苦同樂","동고동락",[["同","같다"],["苦","쓰다(괴로움)"],["同","같다"],["樂","즐겁다"]],"괴로움도 즐거움도 함께함"],
+[14,"東奔西走","동분서주",[["東","동녘"],["奔","달리다"],["西","서녘"],["走","달리다"]],"사방으로 이리저리 몹시 바쁘게 돌아다님"],
+[15,"馬耳東風","마이동풍",[["馬","말"],["耳","귀"],["東","동녘"],["風","바람"]],"남의 말을 귀담아듣지 않고 흘려버림"],
+[16,"莫上莫下","막상막하",[["莫","없다"],["上","위"],["莫","없다"],["下","아래"]],"더 낫고 더 못함의 차이가 거의 없음"],
+[17,"名實相符","명실상부",[["名","이름"],["實","실상"],["相","서로"],["符","부합하다"]],"알려진 것과 실제 내용이 서로 꼭 맞음"],
+[18,"百戰老將","백전노장",[["百","일백"],["戰","싸움"],["老","늙다"],["將","장수"]],"온갖 어려운 일을 많이 겪은 노련한 사람"],
+[19,"事必歸正","사필귀정",[["事","일"],["必","반드시"],["歸","돌아가다"],["正","바르다"]],"모든 일은 결국 바른 길로 돌아감"],
+[20,"山戰水戰","산전수전",[["山","산"],["戰","싸우다"],["水","물"],["戰","싸우다"]],"세상의 온갖 고생과 어려움을 다 겪음"],
+[21,"先公後私","선공후사",[["先","먼저"],["公","공공"],["後","뒤"],["私","사사"]],"공적인 것을 먼저, 사적인 것을 뒤에 함"],
+[22,"雪上加霜","설상가상",[["雪","눈"],["上","위"],["加","더하다"],["霜","서리"]],"불행한 일이 잇따라 일어남"],
+[23,"我田引水","아전인수",[["我","나"],["田","밭"],["引","당기다"],["水","물"]],"자기에게만 이롭게 되도록 생각하거나 행동함"],
+[24,"言中有骨","언중유골",[["言","말씀"],["中","가운데"],["有","있다"],["骨","뼈"]],"예사로운 말 속에 단단한 속뜻이 들어 있음"],
+[25,"易地思之","역지사지",[["易","바꾸다"],["地","땅,처지"],["思","생각하다"],["之","그것"]],"입장을 바꾸어 상대방의 처지에서 생각함"],
+[26,"吾鼻三尺","오비삼척",[["吾","나"],["鼻","코"],["三","석"],["尺","자"]],"자기 사정이 급하여 남을 돌볼 겨를이 없음"],
+[27,"有名無實","유명무실",[["有","있다"],["名","이름"],["無","없다"],["實","실상"]],"이름은 있으나 실속은 없음"],
+[28,"下馬評","하마평",[["下","아래"],["馬","말"],["評","평하다"]],"관직 임명 등을 앞두고 나오는 세간의 평판이나 소문"],
+[29,"類類相從","유유상종",[["類","무리"],["類","무리"],["相","서로"],["從","따르다"]],"비슷한 성격·수준·취향을 가진 사람들끼리 서로 어울림"],
+[30,"一口二言","일구이언",[["一","하나"],["口","입"],["二","두"],["言","말씀"]],"한 가지 일에 대하여 말을 이랬다 저랬다 함"],
+[31,"日就月將","일취월장",[["日","날"],["就","나아가다"],["月","달"],["將","나아가다"]],"실력이나 능력이 날로 달로 계속 발전함"],
+[32,"自業自得","자업자득",[["自","스스로"],["業","일"],["自","스스로"],["得","얻다"]],"자기가 한 일의 결과를 자기가 받음"],
+[33,"作心三日","작심삼일",[["作","짓다"],["心","마음"],["三","셋"],["日","날"]],"단단히 먹은 마음이 사흘밖에 가지 못함"],
+[34,"轉禍爲福","전화위복",[["轉","구르다,바뀌다"],["禍","재앙"],["爲","되다"],["福","복"]],"재앙이 바뀌어 오히려 복이 됨"],
+[35,"朝令暮改","조령모개",[["朝","아침"],["令","명령"],["暮","저녁"],["改","고치다"]],"법령을 자꾸 고쳐서 갈피를 잡기 어려움"],
+[36,"坐井觀天","좌정관천",[["坐","앉다"],["井","우물"],["觀","보다"],["天","하늘"]],"견문이 좁아 세상을 넓게 보지 못하는 태도"],
+[37,"竹馬故友","죽마고우",[["竹","대나무"],["馬","말"],["故","예"],["友","벗"]],"어릴 때부터 함께 자란 오랜 친구"],
+[38,"衆口難防","중구난방",[["衆","무리"],["口","입"],["難","어렵다"],["防","막다"]],"여러 사람이 제각기 떠들어 의견이 통일되지 않는 상태"],
+[39,"至誠感天","지성감천",[["至","이르다,지극하다"],["誠","정성"],["感","느끼다"],["天","하늘"]],"지극한 정성은 하늘을 감동시킴"],
+[40,"靑山流水","청산유수",[["靑","푸르다"],["山","산"],["流","흐르다"],["水","물"]],"막힘없이 쏟아내는 유창한 말솜씨"],
+[41,"初志一貫","초지일관",[["初","처음"],["志","뜻"],["一","하나"],["貫","꿰다"]],"처음에 세운 뜻을 끝까지 밀고 나감"],
+[42,"他山之石","타산지석",[["他","남,다르다"],["山","산"],["之","~의"],["石","돌"]],"다른 사람의 부족함이나 경험도 자신을 발전시키는 교훈이 됨"],
+[43,"興盡悲來","흥진비래",[["興","일다(흥)"],["盡","다하다"],["悲","슬프다"],["來","오다"]],"즐거운 일이 다하면 슬픈 일이 닥쳐옴, 세상일은 순환됨"],
+[44,"架橋","가교",[["架","걸치다,설치하다"],["橋","다리"]],"서로 떨어져 있는 것을 이어 주는 사물이나 사실"],
+[45,"鼓吹","고취",[["鼓","두드리다"],["吹","불다"]],"힘을 내도록 격려하여 용기를 북돋음, 사상 등을 열렬히 불어넣음"],
+[46,"壓卷","압권",[["壓","누르다"],["卷","두루마리,책"]],"여럿 가운데 가장 뛰어난 것"],
+[47,"苦肉策","고육책",[["苦","쓰다,괴롭다"],["肉","고기(육신)"],["策","꾀,계책"]],"어려운 상태를 벗어나기 위해 어쩔 수 없이 꾸며 내는 계책"],
+[48,"不毛地","불모지",[["不","아니다"],["毛","털(식물,초목)"],["地","땅"]],"식물이 자라지 못하는 땅, 어떤 분야가 발전되지 못한 상태"],
+[49,"如反掌","여반장",[["如","같다"],["反","뒤집다"],["掌","손바닥"]],"손바닥을 뒤집는 것 같음, 일이 매우 쉬움"],
+[50,"刻骨難忘","각골난망",[["刻","새기다"],["骨","뼈"],["難","어렵다"],["忘","잊다"]],"남에게 입은 은혜가 마음속 깊이 사무쳐 잊히지 아니함"],
+[51,"客反爲主","객반위주",[["客","손님"],["反","도리어"],["爲","되다"],["主","주인"]],"부차적인 것을 주된 것보다 오히려 더 중요하게 여김"],
+[52,"見金如石","견금여석",[["見","보다"],["金","쇠,금"],["如","같다"],["石","돌"]],"황금 보기를 돌 같이 함, 지나친 욕심을 절제함"],
+[53,"結草報恩","결초보은",[["結","맺다"],["草","풀"],["報","갚다"],["恩","은혜"]],"죽은 뒤에라도 은혜를 잊지 않고 갚음"],
+[54,"鷄卵有骨","계란유골",[["鷄","닭"],["卵","알"],["有","있다"],["骨","뼈"]],"운수가 나쁜 사람은 좋은 기회를 만나도 역시 일이 잘 안됨"],
+[55,"種豆得豆","종두득두",[["種","심다"],["豆","콩"],["得","얻다"],["豆","콩"]],"원인에 따라 결과가 생김, 행한 대로 결과를 얻음"],
+[56,"錦上添花","금상첨화",[["錦","비단"],["上","위"],["添","더하다"],["花","꽃"]],"좋은 일 위에 또 좋은 일이 더해짐"],
+[57,"老馬之智","노마지지",[["老","늙다"],["馬","말"],["之","~의"],["智","지혜"]],"경험이 많은 사람이 가진 지혜와 노련함"],
+[58,"同氣相求","동기상구",[["同","같다"],["氣","기운"],["相","서로"],["求","구하다"]],"성질이나 생각이 비슷한 사람들끼리 서로 끌리고 모임"],
+[59,"同床異夢","동상이몽",[["同","같다"],["床","평상"],["異","다르다"],["夢","꿈"]],"겉으로는 함께 행동하지만 속마음이나 생각은 서로 다름"],
+[60,"燈火可親","등화가친",[["燈","등불"],["火","불"],["可","~할만하다"],["親","친하다"]],"서늘한 가을밤은 등불을 가까이하여 글 읽기에 좋음"],
+[61,"反求諸己","반구저기",[["反","돌이키다"],["求","구하다"],["諸","~에게서 그것"],["己","자기"]],"잘못된 원인을 남 탓하지 않고 자기 자신에게서 찾음"],
+[62,"發憤忘食","발분망식",[["發","내다"],["憤","성내다"],["忘","잊다"],["食","먹다"]],"끼니조차 잊을 정도로 어떤 일에 열중하여 노력함"],
+[63,"百折不屈","백절불굴",[["百","일백"],["折","꺾다"],["不","아니다"],["屈","굽히다"]],"어떠한 난관에도 결코 굽히지 않음"],
+[64,"不知其數","부지기수",[["不","아니다"],["知","알다"],["其","그"],["數","세다,수"]],"헤아릴 수가 없을 만큼 많음"],
+[65,"不問曲直","불문곡직",[["不","아니다"],["問","묻다"],["曲","굽다"],["直","곧다"]],"옳고 그름을 따지지 아니함"],
+[66,"殺身成仁","살신성인",[["殺","죽이다"],["身","자신"],["成","이루다"],["仁","어질다"]],"자기를 희생하여 옳은 도리를 행함"],
+[67,"小貪大失","소탐대실",[["小","작다"],["貪","탐하다"],["大","크다"],["失","잃다"]],"눈앞의 작은 이익 때문에 더 큰 것을 잃음"],
+[68,"速戰速決","속전속결",[["速","빠르다"],["戰","싸우다"],["速","빠르다"],["決","결정하다"]],"어떤 일을 빨리 진행하여 빨리 끝냄"],
+[69,"格物致知","격물치지",[["格","격식"],["物","물건"],["致","이르다"],["知","알다"]],"사물의 이치를 연구하여 지식을 완전하게 함"],
+[70,"兩手兼將","양수겸장",[["兩","두"],["手","손"],["兼","겸하다"],["將","나아가다"]],"양쪽에서 동시에 하나를 노림"],
+[71,"魚變成龍","어변성룡",[["魚","물고기"],["變","변하다"],["成","이루다"],["龍","용"]],"곤궁하던 사람이 부귀를 누리거나 큰 인물이 됨"],
+[72,"屋上架屋","옥상가옥",[["屋","집,지붕"],["上","위"],["架","걸치다"],["屋","집,지붕"]],"이미 있는 것 위에 또 덧붙여 쓸데없이 겹치게 만듦"],
+[73,"欲速不達","욕속부달",[["欲","하고자하다"],["速","빠르다"],["不","아니다"],["達","이르다"]],"빨리 하고자 하면 오히려 도달하지 못함"],
+[74,"有口無言","유구무언",[["有","있다"],["口","입"],["無","없다"],["言","말"]],"입은 있어도 할 말은 없음, 변명하지 못함"],
+[75,"以心傳心","이심전심",[["以","~로써"],["心","마음"],["傳","전하다"],["心","마음"]],"마음과 마음으로 서로 뜻이 통함"],
+[76,"一罰百戒","일벌백계",[["一","하나"],["罰","벌하다"],["百","일백"],["戒","경계하다"]],"한 사람을 벌주어 여러 사람을 경계함"],
+[77,"自强不息","자강불식",[["自","스스로"],["强","강하다"],["不","아니다"],["息","쉬다"]],"스스로 힘써 몸과 마음을 가다듬어 쉬지 아니함"],
+[78,"焚書坑儒","분서갱유",[["焚","불사르다"],["書","책"],["坑","구덩이"],["儒","선비"]],"서적을 불태우고 유생을 구덩이에 묻음"],
+[79,"會者定離","회자정리",[["會","모이다"],["者","사람"],["定","정하다"],["離","떠나다"]],"만난 자는 반드시 헤어짐, 모든 것이 무상함"],
+[80,"晝耕夜讀","주경야독",[["晝","낮"],["耕","밭갈다"],["夜","밤"],["讀","읽다"]],"어려운 여건 속에서도 꿋꿋이 공부함"],
+[81,"進退兩難","진퇴양난",[["進","나아가다"],["退","물러나다"],["兩","두"],["難","어렵다"]],"나아가기도 물러나기도 둘 다 어려운 처지"],
+[82,"千態萬象","천태만상",[["千","일천"],["態","모양"],["萬","일만"],["象","모양"]],"세상 사물이 한결같지 아니하고 각각 모양이 다름"],
+[83,"推己及人","추기급인",[["推","밀다"],["己","자기"],["及","미치다"],["人","사람,남"]],"자신의 처지를 미루어 다른 사람의 형편을 헤아림"],
+[84,"破竹之勢","파죽지세",[["破","깨뜨리다"],["竹","대나무"],["之","~한"],["勢","기세"]],"적을 거침없이 물리치고 쳐들어가는 기세"],
+[85,"平地風波","평지풍파",[["平","평평하다"],["地","땅"],["風","바람"],["波","물결"]],"평평한 땅에서 일어나는 바람과 물결, 뜻밖에 분쟁이 일어남"],
+[86,"間髮","간발",[["間","사이"],["髮","터럭(털)"]],"머리털 사이, 아주 잠시나 아주 적음"],
+[87,"頭角","두각",[["頭","머리"],["角","뿔"]],"뛰어난 학식이나 재능"],
+[88,"秋毫","추호",[["秋","가을"],["毫","잔털"]],"매우 적거나 조금인 것"],
+[89,"導火線","도화선",[["導","이끌다"],["火","불"],["線","선"]],"사건이 일어나게 된 직접적인 원인"],
+[90,"門外漢","문외한",[["門","문"],["外","바깥"],["漢","사내(남자)"]],"어떤 일에 직접 관계가 없거나 전문 지식이 없는 사람"],
+[91,"反間計","반간계",[["反","뒤집다"],["間","사이"],["計","꾀,계책"]],"두 사람이나 나라 사이를 서로 멀어지게 하는 계책"],
+[92,"各樣各色","각양각색",[["各","각각"],["樣","모양"],["各","각각"],["色","빛"]],"각기 다른 여러 가지 모양과 빛깔, 매우 다양함"],
+[93,"開卷有益","개권유익",[["開","열다"],["卷","책"],["有","있다"],["益","이롭다"]],"책을 펼치면 이로움이 있음, 독서를 권장함"],
+[94,"見物生心","견물생심",[["見","보다"],["物","물건"],["生","나다"],["心","마음"]],"물건을 보면 그것을 갖고 싶은 마음이 생김"],
+[95,"結者解之","결자해지",[["結","맺다"],["者","사람"],["解","풀다"],["之","그것"]],"자기가 저지른 일은 자기가 해결해야 함"],
+[96,"鷄口牛後","계구우후",[["鷄","닭"],["口","입"],["牛","소"],["後","뒤"]],"큰 단체의 꼴찌보다는 작은 단체의 우두머리가 나음"],
+[97,"口蜜腹劍","구밀복검",[["口","입"],["蜜","꿀"],["腹","배"],["劍","칼"]],"말로는 친한 듯하나 속으로는 해칠 생각이 있음"],
+[98,"騎虎之勢","기호지세",[["騎","말타다"],["虎","호랑이"],["之","~한"],["勢","기세"]],"이미 시작한 일을 중도에서 그만둘 수 없음"],
+[99,"獨不將軍","독불장군",[["獨","홀로"],["不","아니다"],["將","장수"],["軍","군사"]],"혼자서는 장군이 못됨, 자기 생각대로만 혼자 처리하는 사람"],
+[100,"面從腹背","면종복배",[["面","얼굴"],["從","따르다"],["腹","배,마음"],["背","등지다"]],"겉으로는 복종하는 체하면서 마음속으로는 배신함"],
+[101,"名不虛傳","명불허전",[["名","이름"],["不","아니다"],["虛","비다,헛되다"],["傳","전하다"]],"명예나 명성은 헛되이 전해지지 않음, 이름날 만한 까닭이 있음"],
+[102,"明若觀火","명약관화",[["明","밝다"],["若","같다"],["觀","보다"],["火","불"]],"불을 보는 것처럼 아주 뚜렷하여 의심할 여지 없이 분명함"],
+[103,"傍若無人","방약무인",[["傍","곁"],["若","같다"],["無","없다"],["人","사람"]],"주위를 전혀 의식하지 않고 함부로 말하고 행동함"],
+[104,"覆車之戒","복거지계",[["覆","엎어지다"],["車","수레"],["之","~한"],["戒","경계"]],"남의 실패를 거울삼아 자기를 경계함"],
+[105,"非一非再","비일비재",[["非","아니다"],["一","하나"],["非","아니다"],["再","두(다시)"]],"같은 일이 한두 번이 아니고 많음"],
+[106,"三人成虎","삼인성호",[["三","셋"],["人","사람"],["成","이루다"],["虎","호랑이"]],"근거 없는 말도 여러 사람이 말하면 곧이듣게 됨"],
+[107,"桑田碧海","상전벽해",[["桑","뽕나무"],["田","밭"],["碧","푸르다"],["海","바다"]],"뽕나무 밭이 푸른 바다가 됨, 세상일의 변천이 심함"],
+[108,"水魚之交","수어지교",[["水","물"],["魚","물고기"],["之","~의"],["交","사귐"]],"물과 물고기의 관계처럼 아주 친밀하여 떨어질 수 없는 사이"],
+[109,"羊頭狗肉","양두구육",[["羊","양"],["頭","머리"],["狗","개"],["肉","고기"]],"겉보기만 그럴듯하고 속은 변변하지 아니함"],
+[110,"焉敢生心","언감생심",[["焉","어찌"],["敢","감히"],["生","낳다,생기다"],["心","마음"]],"어찌 감히 그런 마음을 품을 수 있겠는가, 전혀 그런 마음이 없음"],
+[111,"炎凉世態","염량세태",[["炎","불꽃"],["凉","서늘하다"],["世","세상"],["態","모양"]],"세력이 있을 때는 아첨하고 없어지면 푸대접하는 세상 인심"],
+[112,"牛刀割鷄","우도할계",[["牛","소"],["刀","칼"],["割","베다"],["鷄","닭"]],"작은 일에 어울리지 않게 큰 도구를 씀"],
+[113,"異口同聲","이구동성",[["異","다르다"],["口","입"],["同","같다"],["聲","소리"]],"여러 사람의 말이 한결같음"],
+[114,"以卵擊石","이란격석",[["以","~로써"],["卵","알"],["擊","치다"],["石","돌"]],"계란으로 돌을 침, 아주 약한 것으로 강한 것에 대항하는 어리석음"],
+[115,"一絲不亂","일사불란",[["一","하나"],["絲","실"],["不","아니다"],["亂","어지럽다"]],"질서가 정연하여 조금도 흐트러지지 아니함"],
+[116,"一波萬波","일파만파",[["一","하나"],["波","물결"],["萬","일만"],["波","물결"]],"한 사건이 잇따라 많은 사건으로 번짐"],
+[117,"積小成大","적소성대",[["積","쌓다"],["小","작다"],["成","이루다"],["大","크다"]],"작거나 적은 것도 쌓이면 크게 되거나 많아짐"],
+[118,"坐不安席","좌불안석",[["坐","앉다"],["不","아니다"],["安","편안하다"],["席","자리"]],"마음이 불안하거나 걱정스러워 안절부절못하는 모양"],
+[119,"走馬看山","주마간산",[["走","달리다"],["馬","말"],["看","보다"],["山","산"]],"자세히 살피지 아니하고 대충대충 보고 지나감"],
+[120,"衆寡不敵","중과부적",[["衆","무리"],["寡","적다"],["不","아니다"],["敵","대적하다"]],"적은 수효로 많은 수효를 대적하지 못함"],
+[121,"知過必改","지과필개",[["知","알다"],["過","허물,잘못"],["必","반드시"],["改","고치다"]],"잘못을 알면 반드시 고쳐야 함"],
+[122,"千辛萬苦","천신만고",[["千","일천"],["辛","맵다(고생)"],["萬","일만"],["苦","쓰다(고통)"]],"온갖 어려운 고비를 다 겪으며 심하게 고생함"],
+[123,"千篇一律","천편일률",[["千","일천"],["篇","책,편"],["一","하나"],["律","법,가락"]],"여럿이 개별적 특성 없이 거의 비슷함"],
+[124,"草綠同色","초록동색",[["草","풀"],["綠","푸르다"],["同","같다"],["色","빛"]],"풀색과 녹색은 같은 색, 같은 무리끼리 잘 어울림"],
+[125,"快刀亂麻","쾌도난마",[["快","상쾌하다"],["刀","칼"],["亂","어지럽다"],["麻","삼"]],"헝클어진 삼 가닥을 잘 드는 칼로 자르듯 복잡한 일을 명쾌하게 처리함"],
+[126,"表裏不同","표리부동",[["表","겉"],["裏","속"],["不","아니다"],["同","같다"]],"겉으로 드러나는 언행과 속으로 가지는 생각이 다름"],
+[127,"下學上達","하학상달",[["下","아래"],["學","배우다"],["上","위"],["達","이르다"]],"쉬운 지식을 배워 어려운 이치를 깨달음, 기초부터 성실히 쌓아 깨달음에 이름"],
+[128,"鶴首苦待","학수고대",[["鶴","학"],["首","머리"],["苦","쓰다,애써"],["待","기다리다"]],"학의 머리처럼 목을 길게 빼고 애타게 기다림"],
+[129,"後生可畏","후생가외",[["後","뒤"],["生","나다"],["可","~할만하다"],["畏","두려워하다"]],"젊은 후학들이 큰 인물이 될 수 있어 두려워할 만함"],
+[130,"改過遷善","개과천선",[["改","고치다"],["過","허물,잘못"],["遷","옮기다"],["善","착하다"]],"지난날의 잘못이나 허물을 고쳐 올바르고 착하게 됨"],
+[131,"隔世之感","격세지감",[["隔","사이 뜨다"],["世","세상"],["之","~한"],["感","느낌"]],"오래지 않은 동안에 몰라보게 변하여 아주 다른 세상이 된 것 같은 느낌"],
+[132,"姑息之計","고식지계",[["姑","잠시"],["息","쉬다"],["之","~하는"],["計","꾀,계책"]],"당장 편한 것만을 택하는 임시방편의 계책"],
+[133,"過猶不及","과유불급",[["過","지나치다"],["猶","같다"],["不","아니다"],["及","미치다"]],"정도를 지나침은 미치지 못함과 같음, 균형과 절제의 중요성(중용)"],
+[134,"九牛一毛","구우일모",[["九","아홉"],["牛","소"],["一","하나"],["毛","털"]],"아홉 마리의 소 가운데 박힌 하나의 털, 매우 많은 것 가운데 극히 적은 수"],
+[135,"權不十年","권불십년",[["權","권세"],["不","아니다"],["十","열"],["年","해"]],"권세는 십 년을 가지 못함, 권력과 부귀는 오래 지속되지 않음"],
+[136,"近墨者黑","근묵자흑",[["近","가깝다"],["墨","먹"],["者","사람"],["黑","검다"]],"먹을 가까이하는 사람은 검어짐, 나쁜 사람과 가까이 지내면 물들기 쉬움"],
+[137,"今始初聞","금시초문",[["今","이제"],["始","비로소"],["初","처음"],["聞","듣다"]],"지금 비로소 처음으로 들음"],
+[138,"累卵之危","누란지위",[["累","포개다"],["卵","알"],["之","~는"],["危","위태롭다"]],"쌓아 놓은 알처럼 몹시 아슬아슬한 위기"],
+[139,"斷金之交","단금지교",[["斷","끊다"],["金","쇠"],["之","~는"],["交","사귐"]],"쇠도 자를 만큼 단단한 사귐, 매우 두터운 우정"],
+[140,"單刀直入","단도직입",[["單","홑"],["刀","칼"],["直","곧다"],["入","들어가다"]],"여러 말 늘어놓지 않고 바로 요점이나 본문제를 중심으로 말함"],
+[141,"大器晩成","대기만성",[["大","크다"],["器","그릇"],["晩","늦다"],["成","이루다"]],"큰 그릇은 늦게 이루어짐, 크게 될 사람은 늦게 이루어짐"],
+[142,"同病相憐","동병상련",[["同","같다"],["病","병"],["相","서로"],["憐","불쌍히 여기다"]],"같은 병을 앓는 사람끼리 서로 가엾게 여김"],
+[143,"孟母三遷","맹모삼천",[["孟","맏"],["母","어머니"],["三","셋"],["遷","옮기다"]],"맹자의 어머니가 세 번 이사함, 환경이 성장에 매우 중요함"],
+[144,"無爲徒食","무위도식",[["無","없다"],["爲","하다"],["徒","헛되이"],["食","먹다"]],"하는 일 없이 헛되이 먹기만 함"],
+[145,"聞一知十","문일지십",[["聞","듣다"],["一","하나"],["知","알다"],["十","열"]],"하나를 듣고 열 가지를 미루어 앎, 지극히 총명함"],
+[146,"門前成市","문전성시",[["門","문"],["前","앞"],["成","이루다"],["市","시장"]],"찾아오는 사람이 매우 많아 집 문 앞이 시장을 이룸"],
+[147,"拔本塞源","발본색원",[["拔","뽑다"],["本","근본"],["塞","막다"],["源","근원"]],"좋지 않은 일의 근본 원인을 완전히 없애 버림"],
+[148,"四顧無親","사고무친",[["四","넷"],["顧","돌아보다"],["無","없다"],["親","친하다"]],"사방을 돌아보아도 의지할 만한 친한 사람이 아무도 없음"],
+[149,"沙上樓閣","사상누각",[["沙","모래"],["上","위"],["樓","다락,누각"],["閣","집,누각"]],"모래 위에 세운 누각, 기초가 튼튼하지 못해 오래 견디지 못할 일"],
+[150,"捨生取義","사생취의",[["捨","버리다"],["生","살다"],["取","취하다"],["義","옳다(의)"]],"목숨을 버릴지언정 옳은 일을 함"],
+[151,"先見之明","선견지명",[["先","먼저"],["見","보다"],["之","~는"],["明","밝다"]],"어떤 일이 일어나기 전에 미리 앞을 내다보고 아는 지혜"],
+[152,"手不釋卷","수불석권",[["手","손"],["不","아니다"],["釋","놓다"],["卷","책"]],"손에서 책을 놓지 않음, 한시도 학문을 게을리하지 않음"],
+[153,"宿虎衝鼻","숙호충비",[["宿","자다"],["虎","호랑이"],["衝","찌르다"],["鼻","코"]],"가만히 있는 사람을 공연히 건드려서 화를 입거나 일을 불리하게 만듦"],
+[154,"眼下無人","안하무인",[["眼","눈"],["下","아래"],["無","없다"],["人","사람"]],"방자하고 교만하여 다른 사람을 업신여김"],
+[155,"養虎遺患","양호유환",[["養","기르다"],["虎","호랑이"],["遺","남기다"],["患","근심"]],"화근이 될 것을 길러서 후환을 당하게 됨"],
+[156,"如履薄氷","여리박빙",[["如","같다"],["履","밟다"],["薄","엷다"],["氷","얼음"]],"살얼음을 밟는 것과 같음, 매사를 두려워하며 신중하게 처리함"],
+[157,"外柔內剛","외유내강",[["外","바깥"],["柔","부드럽다"],["內","안"],["剛","굳세다"]],"겉으로는 부드럽고 순하게 보이나 속마음은 곧고 굳셈"],
+[158,"龍頭蛇尾","용두사미",[["龍","용"],["頭","머리"],["蛇","뱀"],["尾","꼬리"]],"용의 머리와 뱀의 꼬리, 처음은 왕성하나 끝은 부진함"],
+[159,"牛耳讀經","우이독경",[["牛","소"],["耳","귀"],["讀","읽다"],["經","경서"]],"소의 귀에 경을 읽음, 아무리 가르치고 일러 주어도 알아듣지 못함"],
+[160,"有志竟成","유지경성",[["有","있다"],["志","뜻"],["竟","마침내"],["成","이루다"]],"굳은 의지를 가지면 결국 목표를 이룰 수 있음"],
+[161,"因果應報","인과응보",[["因","원인"],["果","결과"],["應","응하다"],["報","갚다"]],"원인과 결과는 상응하여 갚음, 행한 대로 결실을 얻음"],
+[162,"一石二鳥","일석이조",[["一","하나"],["石","돌"],["二","두"],["鳥","새"]],"한 개의 돌로 두 마리의 새를 잡음, 동시에 두 가지 이득을 봄"],
+[163,"一魚濁水","일어탁수",[["一","하나"],["魚","물고기"],["濁","흐리다"],["水","물"]],"한 마리 물고기가 물을 흐림, 한 사람의 잘못으로 여러 사람이 피해를 입음"],
+[164,"適材適所","적재적소",[["適","알맞다"],["材","재목,인재"],["適","알맞다"],["所","곳"]],"알맞은 인재를 알맞은 자리에 씀"],
+[165,"絶體絶命","절체절명",[["絶","끊다"],["體","몸"],["絶","끊다"],["命","목숨"]],"몸도 목숨도 끊어질 만큼 어찌할 수 없는 절박한 경우"],
+[166,"縱橫無盡","종횡무진",[["縱","세로"],["橫","가로"],["無","없다"],["盡","다하다"]],"자유자재로 행동하여 거침이 없는 상태"],
+[167,"風前燈火","풍전등화",[["風","바람"],["前","앞"],["燈","등불"],["火","불"]],"바람 앞의 등불처럼 매우 위태롭고 곧 꺼질 것 같은 상태"],
+[168,"家和萬事成","가화만사성",[["家","집"],["和","화목하다"],["萬","일만"],["事","일"],["成","이루다"]],"가정이 화목하면 온갖 일이 이루어짐"],
+[169,"氷炭不相容","빙탄불상용",[["氷","얼음"],["炭","숯"],["不","아니다"],["相","서로"],["容","받아들이다"]],"얼음과 숯처럼 성질이 정반대여서 서로 화합할 수 없음"],
+[170,"死後藥方文","사후약방문",[["死","죽다"],["後","뒤"],["藥","약"],["方","모(처방)"],["文","글월"]],"죽은 뒤에 약처방문을 씀, 일을 그르친 뒤 뉘우쳐도 이미 늦음"],
+[171,"五十步百步","오십보백보",[["五","다섯"],["十","열"],["步","걸음"],["百","일백"],["步","걸음"]],"오십 걸음 백 걸음, 정도의 차이는 있으나 본질적으로 차이가 없음"],
+[172,"一切唯心造","일체유심조",[["一","하나"],["切","모두"],["唯","오직"],["心","마음"],["造","짓다"]],"모든 것은 오직 마음이 지어낸 것이라는 가르침"],
+[173,"花無十日紅","화무십일홍",[["花","꽃"],["無","없다"],["十","열"],["日","날"],["紅","붉다"]],"열흘 동안 붉은 꽃은 없음, 좋은 것도 영원히 계속되지 않음"],
+[174,"似而非","사이비",[["似","같다"],["而","그러나"],["非","아니다"]],"겉은 그럴듯하나 실제로는 가짜"],
+[175,"落點","낙점",[["落","떨어지다"],["點","점"]],"여러 후보 중 마땅한 대상을 고름"],
+[176,"斷腸","단장",[["斷","끊다"],["腸","창자"]],"창자를 끊는 듯한, 몹시 슬프고 애통한 마음"],
+[177,"安貧樂道","안빈낙도",[["安","편안하다"],["貧","가난하다"],["樂","즐기다"],["道","도"]],"가난함을 편안히 여기고 도를 즐기며 지킴"],
+[178,"望雲之情","망운지정",[["望","바라보다"],["雲","구름"],["之","~한"],["情","정,마음"]],"객지에서 고향에 계신 어버이를 생각하는 마음"],
+[179,"朝三暮四","조삼모사",[["朝","아침"],["三","셋"],["暮","저녁"],["四","넷"]],"간사한 꾀로 남을 속여 희롱함"],
+[180,"漁父之利","어부지리",[["漁","고기잡다"],["父","아비,연장자"],["之","~의"],["利","이롭다"]],"두 사람이 다투는 사이 엉뚱한 사람이 애쓰지 않고 가로챈 이익"],
+[181,"自畵自讚","자화자찬",[["自","스스로"],["畵","그리다"],["自","스스로"],["讚","칭찬하다"]],"자기가 한 일을 스스로 자랑함"],
+[182,"一擧兩得","일거양득",[["一","하나"],["擧","들다"],["兩","둘"],["得","얻다"]],"한 가지 일을 하여 두 가지 이익을 얻음"],
+[183,"自暴自棄","자포자기",[["自","스스로"],["暴","사납다"],["自","스스로"],["棄","버리다"]],"절망에 빠져 스스로를 포기하고 돌아보지 않음"],
+[184,"首丘初心","수구초심",[["首","머리"],["丘","언덕"],["初","처음"],["心","마음"]],"여우가 죽을 때 머리를 살던 언덕으로 둠, 고향을 그리워하는 마음"],
+[185,"重言復言","중언부언",[["重","거듭하다"],["言","말하다"],["復","다시"],["言","말하다"]],"이미 한 말을 자꾸 되풀이함"],
+[186,"與民同樂","여민동락",[["與","더불어"],["民","백성"],["同","같이하다"],["樂","즐겁다"]],"임금이 백성과 더불어 즐거움을 함께함"],
+[187,"獨步","독보",[["獨","홀로"],["步","걸음"]],"남이 따를 수 없을 만큼 혼자 앞서감"],
+[188,"牙城","아성",[["牙","어금니"],["城","성"]],"아기(牙旗)를 세운 성, 아주 중요한 근거지"],
+[189,"大書特筆","대서특필",[["大","크다"],["書","글"],["特","특별하다"],["筆","붓"]],"어떤 기사에 큰 비중을 두어 크게 다룸"],
+[190,"獨也靑靑","독야청청",[["獨","홀로"],["也","어조사"],["靑","푸르다"],["靑","푸르다"]],"남들이 절개를 꺾는 상황에서도 홀로 절개를 굳세게 지킴"],
+[191,"深思熟考","심사숙고",[["深","깊다"],["思","생각하다"],["熟","익다"],["考","생각하다"]],"깊이 잘 생각함"],
+[192,"安分知足","안분지족",[["安","편안하다"],["分","분수"],["知","알다"],["足","만족하다"]],"분수를 편안히 여기며 만족할 줄 앎"],
+[193,"鐵面皮","철면피",[["鐵","쇠"],["面","얼굴"],["皮","가죽"]],"쇠로 만든 낯가죽, 염치가 없고 뻔뻔스러운 사람"],
+[194,"氷山一角","빙산일각",[["氷","얼음"],["山","산"],["一","하나"],["角","뿔"]],"대부분이 숨겨져 있고 외부에 나타난 것은 극히 일부분에 지나지 않음"],
+[195,"敎學相長","교학상장",[["敎","가르치다"],["學","배우다"],["相","서로"],["長","성장하다"]],"가르치고 배우며 서로 성장함"],
+[196,"命在頃刻","명재경각",[["命","목숨"],["在","있다"],["頃","잠깐"],["刻","새기다,시각"]],"목숨이 경각에 달려 있음, 곧 숨이 끊어질 지경에 이름"],
+[197,"無用之物","무용지물",[["無","없다"],["用","쓰다"],["之","~한"],["物","물건"]],"쓸모가 없는 물건이나 사람"],
+[198,"人口膾炙","인구회자",[["人","사람"],["口","입"],["膾","회"],["炙","굽다"]],"회와 구운 고기처럼 사람들의 구미에 맞아 널리 자주 입에 오르내림"],
+[199,"風樹之歎","풍수지탄",[["風","바람"],["樹","나무"],["之","~의"],["歎","탄식하다"]],"효도를 다하지 못한 채 어버이를 여읜 자식의 슬픔"],
+[200,"漸入佳境","점입가경",[["漸","점점"],["入","들어가다"],["佳","아름답다"],["境","지경"]],"점점 들어갈수록 재미가 있거나 절정으로 향함"]
+];
+
+</script>
+<script>
+(function(){
+  // IDIOMS: [no, hanja, reading, [[char,mean],...], meaning]
+  const grid = document.getElementById('grid');
+  const search = document.getElementById('search');
+  const listCount = document.getElementById('list-count');
+
+  function renderGrid(filter){
+    const f = (filter||'').trim().toLowerCase();
+    grid.innerHTML = '';
+    let shown = 0;
+    IDIOMS.forEach(item=>{
+      const [no, hanja, reading, chars, meaning] = item;
+      if(f){
+        const hay = (hanja+reading+meaning).toLowerCase();
+        if(!hay.includes(f)) return;
+      }
+      shown++;
+      const tile = document.createElement('button');
+      tile.className = 'tile';
+      tile.innerHTML = `<span class="no">${no}</span><div class="hanja">${hanja}</div><div class="reading">${reading}</div>`;
+      tile.addEventListener('click', ()=>openModal(no));
+      grid.appendChild(tile);
+    });
+    listCount.textContent = f ? `검색 결과 ${shown}개` : `전체 ${shown}개`;
+  }
+  renderGrid('');
+  search.addEventListener('input', ()=>renderGrid(search.value));
+
+  // ---- Modal ----
+  const backdrop = document.getElementById('modal-backdrop');
+  const modalContent = document.getElementById('modal-content');
+  function openModal(no){
+    const item = IDIOMS.find(x=>x[0]===no);
+    if(!item) return;
+    const [n, hanja, reading, chars, meaning] = item;
+    modalContent.innerHTML = `
+      <div class="mno"><span>제 ${n}번</span><button id="modal-close" aria-label="닫기">&times;</button></div>
+      <div class="mhanja">${hanja}</div>
+      <div class="mreading">${reading}</div>
+      <div class="char-table">
+        ${chars.map(c=>`<div class="char-cell"><span class="c">${c[0]}</span><span class="m">${c[1]}</span></div>`).join('')}
+      </div>
+      <div class="meaning"><span class="label">뜻</span>${meaning}</div>
+    `;
+    backdrop.classList.add('show');
+    document.getElementById('modal-close').addEventListener('click', closeModal);
+  }
+  function closeModal(){ backdrop.classList.remove('show'); }
+  backdrop.addEventListener('click', (e)=>{ if(e.target===backdrop) closeModal(); });
+
+  // ---- Mode tabs ----
+  const modeBtns = document.querySelectorAll('nav.modes button');
+  const views = { list: document.getElementById('view-list'), quiz: document.getElementById('view-quiz') };
+  modeBtns.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      modeBtns.forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      Object.values(views).forEach(v=>v.classList.remove('active'));
+      views[btn.dataset.mode].classList.add('active');
+    });
+  });
+
+  // ---- Quiz range selection ----
+  const rangeGrid = document.getElementById('range-grid');
+  const selCount = document.getElementById('sel-count');
+  const startBtn = document.getElementById('start-quiz');
+  const selectedRanges = new Set();
+
+  const ranges = [];
+  for(let s=1; s<=200; s+=10){ ranges.push([s, Math.min(s+9,200)]); }
+  ranges.forEach(([s,e])=>{
+    const btn = document.createElement('button');
+    btn.className = 'range-btn';
+    btn.textContent = `${s}–${e}`;
+    btn.dataset.s = s; btn.dataset.e = e;
+    btn.addEventListener('click', ()=>{
+      const key = s+'-'+e;
+      if(selectedRanges.has(key)){ selectedRanges.delete(key); btn.classList.remove('selected'); }
+      else { selectedRanges.add(key); btn.classList.add('selected'); }
+      updateSelCount();
+    });
+    rangeGrid.appendChild(btn);
+  });
+
+  function getSelectedItems(){
+    const items = [];
+    selectedRanges.forEach(key=>{
+      const [s,e] = key.split('-').map(Number);
+      IDIOMS.forEach(it=>{ if(it[0]>=s && it[0]<=e) items.push(it); });
+    });
+    return items;
+  }
+  function updateSelCount(){
+    const n = getSelectedItems().length;
+    selCount.textContent = `선택된 문항: ${n}개`;
+    startBtn.disabled = n === 0;
+  }
+
+  document.getElementById('select-all').addEventListener('click', ()=>{
+    rangeGrid.querySelectorAll('.range-btn').forEach(btn=>{
+      selectedRanges.add(btn.dataset.s+'-'+btn.dataset.e);
+      btn.classList.add('selected');
+    });
+    updateSelCount();
+  });
+  document.getElementById('select-none').addEventListener('click', ()=>{
+    selectedRanges.clear();
+    rangeGrid.querySelectorAll('.range-btn').forEach(btn=>btn.classList.remove('selected'));
+    updateSelCount();
+  });
+
+  // ---- Quiz engine ----
+  const setupEl = document.getElementById('quiz-setup');
+  const runningEl = document.getElementById('quiz-running');
+  const resultEl = document.getElementById('quiz-result');
+
+  const qMeaning = document.getElementById('q-meaning');
+  const qChars = document.getElementById('q-chars');
+  const qInput = document.getElementById('q-input');
+  const qCheck = document.getElementById('q-check');
+  const qFeedback = document.getElementById('q-feedback');
+  const qNext = document.getElementById('q-next');
+  const progText = document.getElementById('prog-text');
+  const progBar = document.getElementById('prog-bar');
+  const progScore = document.getElementById('prog-score');
+
+  let quizPool = [];   // current queue of items to ask
+  let quizIndex = 0;
+  let quizCorrect = 0;
+  let quizWrong = [];  // items answered wrong
+  let currentAnswered = false;
+  let lastPool = [];   // for "retry same range"
+
+  function shuffle(arr){
+    const a = arr.slice();
+    for(let i=a.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [a[i],a[j]] = [a[j],a[i]];
+    }
+    return a;
+  }
+
+  function startQuiz(pool){
+    quizPool = shuffle(pool);
+    lastPool = pool;
+    quizIndex = 0;
+    quizCorrect = 0;
+    quizWrong = [];
+    setupEl.style.display = 'none';
+    resultEl.style.display = 'none';
+    runningEl.style.display = 'block';
+    showQuestion();
+  }
+
+  function showQuestion(){
+    currentAnswered = false;
+    const item = quizPool[quizIndex];
+    const [no, hanja, reading, chars, meaning] = item;
+    qMeaning.textContent = meaning;
+    qChars.innerHTML = '';
+    qChars.classList.remove('show');
+    qInput.value = '';
+    qInput.disabled = false;
+    qFeedback.className = 'q-feedback';
+    qFeedback.innerHTML = '';
+    qNext.classList.remove('show');
+    progText.textContent = `${quizIndex+1} / ${quizPool.length}`;
+    progBar.style.width = `${(quizIndex/quizPool.length)*100}%`;
+    progScore.textContent = `맞음 ${quizCorrect}`;
+    qInput.focus();
+  }
+
+  function checkAnswer(){
+    if(currentAnswered) return;
+    const item = quizPool[quizIndex];
+    const [no, hanja, reading, chars, meaning] = item;
+    const userAns = qInput.value.trim().replace(/\s+/g,'');
+    const correct = userAns === reading;
+    currentAnswered = true;
+    qInput.disabled = true;
+    qChars.innerHTML = chars.map(c=>`<div class="char-cell"><span class="c">${c[0]}</span><span class="m">${c[1]}</span></div>`).join('');
+    qChars.classList.add('show');
+    const charBreak = chars.map(c=>`${c[0]}(${c[1]})`).join(' ');
+    if(correct){
+      quizCorrect++;
+      qFeedback.className = 'q-feedback show correct';
+      qFeedback.innerHTML = `정답입니다! <span class="ans-hanja">${hanja} (${reading})</span><br><span class="ans-breakdown">${charBreak}</span>`;
+    } else {
+      quizWrong.push(item);
+      qFeedback.className = 'q-feedback show wrong';
+      qFeedback.innerHTML = `오답입니다. 정답은 <span class="ans-hanja">${hanja} (${reading})</span> 입니다.<br><span class="ans-breakdown">${charBreak}</span>`;
+    }
+    qNext.classList.add('show');
+    qNext.textContent = (quizIndex === quizPool.length-1) ? '결과 보기 →' : '다음 문제 →';
+  }
+
+  qCheck.addEventListener('click', checkAnswer);
+  qInput.addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter'){
+      if(!currentAnswered) checkAnswer();
+      else nextQuestion();
+    }
+  });
+  qNext.addEventListener('click', nextQuestion);
+
+  function nextQuestion(){
+    if(quizIndex < quizPool.length-1){
+      quizIndex++;
+      showQuestion();
+    } else {
+      finishQuiz();
+    }
+  }
+
+  function finishQuiz(){
+    runningEl.style.display = 'none';
+    resultEl.style.display = 'block';
+    document.getElementById('result-score').textContent = `${quizCorrect} / ${quizPool.length}`;
+    const pct = Math.round((quizCorrect/quizPool.length)*100);
+    document.getElementById('result-sub').textContent = `정답률 ${pct}%`;
+    const wrongListEl = document.getElementById('wrong-list');
+    if(quizWrong.length === 0){
+      wrongListEl.innerHTML = `<div class="empty-msg">모두 맞혔습니다! 훌륭해요 🎉</div>`;
+      document.getElementById('retry-wrong').style.display = 'none';
+    } else {
+      document.getElementById('retry-wrong').style.display = 'inline-block';
+      wrongListEl.innerHTML = `<h3>틀린 문제 (${quizWrong.length}개)</h3>` + quizWrong.map(item=>{
+        const [no, hanja, reading, chars, meaning] = item;
+        return `<div class="wrong-item"><span class="wh">${hanja}</span><span class="wr">${reading}</span><span class="wm">${meaning}</span></div>`;
+      }).join('');
+    }
+  }
+
+  startBtn.addEventListener('click', ()=>{
+    const pool = getSelectedItems();
+    if(pool.length === 0) return;
+    startQuiz(pool);
+  });
+
+  document.getElementById('retry-wrong').addEventListener('click', ()=>{
+    if(quizWrong.length === 0) return;
+    startQuiz(quizWrong);
+  });
+  document.getElementById('retry-same').addEventListener('click', ()=>{
+    startQuiz(lastPool);
+  });
+  document.getElementById('back-setup').addEventListener('click', ()=>{
+    resultEl.style.display = 'none';
+    setupEl.style.display = 'block';
+  });
+
+})();
+</script>
+</body>
+</html>
